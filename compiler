@@ -1,0 +1,4 @@
+rm app2
+g++ -c *.cpp
+g++ -o app2 *.cpp
+rm -fr *.o

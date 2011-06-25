@@ -142,10 +142,7 @@ int main (int argc, char * const argv[]) {
   
   test_basics_structures(true, "* Teste - Estruturas Basicas...\n");
   
-<<<<<<< HEAD
 
-=======
->>>>>>> Shop class
   
   system("pause");
   return 0;

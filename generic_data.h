@@ -27,18 +27,20 @@ protected:
   
 public:
   GenericData(int id, string name){
-    
+    _id = id;
+    _name = name;
   };
+  
   ~GenericData(){};
   
   
   /* atributos genericos */
   
-  int getId() const{ return _id; };
-  void setId(int value){ _id = value; };
+  virtual int getId() const{ return _id; };
+  virtual void setId(int value){ _id = value; };
   
-  string getName() const{ return _name; };
-  void setName(string value){ _name = value; };
+  virtual string getName() const{ return _name; };
+  virtual void setName(string value){ _name = value; };
   
   /* --- */
   

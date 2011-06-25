@@ -38,7 +38,8 @@ void test_basics_structures (bool run, string _test_name="") {
     
     GenericData * db = new GenericData(1, "Leonardo Costa");
     
-    int id_from_db = db->getId(); app_print(id_from_db, false);
+    int id_from_db = db->getId(); 
+	app_print(id_from_db, false);
     
     app_print(db->getName());
     
@@ -141,8 +142,12 @@ int main (int argc, char * const argv[]) {
   
   test_basics_structures(true, "* Teste - Estruturas Basicas...\n");
   
+<<<<<<< HEAD
 
+=======
+>>>>>>> Shop class
   
+  system("pause");
   return 0;
 }
 

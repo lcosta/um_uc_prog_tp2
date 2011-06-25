@@ -1,6 +1,6 @@
 #include "drug.h"
 
-Drug::Drug() {
+Drug::Drug() : GenericData() {
 
 }
 

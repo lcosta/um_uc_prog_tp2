@@ -1,6 +1,6 @@
 #include "pharmacy.h"
 
-Pharmacy::Pharmacy() {
+Pharmacy::Pharmacy() : GenericData() {
   
   drugs_count = 0;
   drugs = new Drug*[1];

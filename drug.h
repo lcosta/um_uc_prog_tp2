@@ -5,10 +5,11 @@
 #include <iostream>
 #include <fstream>
 #include "date.h"
+#include "generic_data.h"
 
 using namespace std;
 
-class Drug {
+class Drug : public GenericData{
 protected:
   int id;
   string name;

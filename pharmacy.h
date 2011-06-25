@@ -4,9 +4,10 @@
 #include "drugs_package.h"
 #include "client.h"
 #include "date.h"
+#include "generic_data.h"
 
 
-class Pharmacy {
+class Pharmacy : public GenericData {
 protected:
   int id;
   string name;

@@ -4,10 +4,11 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "generic_data.h"
 
 using namespace std;
 
-class Client {
+class Client : public GenericData {
 protected:
   int id;
   string name;

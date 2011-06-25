@@ -4,6 +4,7 @@
 #include <string>
 
 #include "tree.h"
+#include "tree_client.h"
 
 #include "client.h"
 
@@ -23,6 +24,9 @@ void app_print(int number, bool endl=true){
 };
 
 /* --- */
+
+
+
 
 void test_basics_structures (bool run, string _test_name="") {
   if (run && !_run_none_test) {
@@ -68,13 +72,53 @@ void test_basics_structures (bool run, string _test_name="") {
     b_tree->add(new GenericData(4, "new"));
     
     
-    //Client * client1 = new Client(22);
-    
-    
-    //b_tree->add();
-    
+    Client * client1 = new Client(1000, "leo", 22);
+
+    b_tree->add(client1);    
     b_tree->print(std::cout);
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    app_print("maker - tree_client");
+    
+    
+    TreeClient * b_tree_client_db = new TreeClient();
+    
+    b_tree_client_db->add(new Client(1, "client 1", 10));
+    b_tree_client_db->add(new Client(2, "client 2", 20));
+    b_tree_client_db->add(new Client(3, "client 3", 30));
+    
+    GenericData * get_client1 = b_tree_client_db->get(2);
+    
+    
+     if (typeid(*get_client1) == typeid(Client)) {
+       app_print("get id, name and age from client...");
+       
+       Client * current_client = ((Client*)get_client1);
+       
+       int id_client = current_client->getId();
+       app_print(id_client);
+       
+       
+       string name_client = current_client->getName();
+       app_print(name_client);
+       
+       int age = current_client->getAge();
+       
+       app_print(age);
+     }
+    
+    //b_tree_client_db->add(right_generic_data);
+    
+    b_tree_client_db->print(std::cout);
     
     app_print("");
     app_print("");
@@ -86,12 +130,7 @@ void test_basics_structures (bool run, string _test_name="") {
   }
 }
 
-void test_x (bool run, string _test_name="") {
-  if (run && !_run_none_test) {
-    app_print(_test_name);
-    
-  }
-}
+
 
 int main (int argc, char * const argv[]) {
   
@@ -102,7 +141,7 @@ int main (int argc, char * const argv[]) {
   
   test_basics_structures(true, "* Teste - Estruturas Basicas...\n");
   
-  test_x(true, "* Teste -  X");
+
   
   return 0;
 }

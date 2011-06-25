@@ -9,32 +9,37 @@
 
 using namespace std;
 
-class Client {
+
+class Client : public GenericData {
+  
 protected:
   int _age;
   
+  
 public:
-  Client();	
+  Client(int id, string name, int age);
   
-  Client(int age);  
   ~Client();
-
-  // START: gets and sets
-  int getAge() const{
-    return _age;
-  };
-  void setAge(int value){
-    _age = value;
-  };
-  // END: gets and sets  
   
   
-  // START: methods
-  void print();
-  void write(std::ostream &out);
-  // END: methods
+  /* atributos genericos */
   
-
+  virtual int getAge() const{ return _age; };
+  virtual void setAge(int value){ _age = value; };
+  
+  
+  
+  
+  /* --- */
+  
+  
 };
+
+
+Client::Client(int id, string name, int age) : GenericData(id, name){
+  Client::_age = age;
+};
+
+
 
 #endif

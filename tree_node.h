@@ -7,7 +7,16 @@
 #ifndef _TREENODE_H_
 #define _TREENODE_H_
 
+
+#include <string>
+#include <iostream>
+#include <fstream>
 #include "generic_data.h"
+
+using namespace std;
+
+
+
 
 class TreeNode {
 private:

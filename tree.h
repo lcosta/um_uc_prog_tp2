@@ -6,19 +6,28 @@
 #ifndef _TREE_H_
 #define _TREE_H_
 
+#include <string>
 #include <iostream>
+#include <fstream>
+
+#include "generic_data.h"
+
 #include "tree_node.h"
 
+using namespace std;
+
 class Tree  {
+  
 private:
 	int size;
 	TreeNode * root;
+  
 public:
 	Tree();
 	~Tree();
 	
 	virtual void add(GenericData * elem);
-	virtual bool remove(GenericData * elem);
+	/* virtual bool remove(GenericData * elem); */
 	
 	virtual bool contains(int id) const;
 	virtual GenericData * get(int id) const;
@@ -35,7 +44,7 @@ protected:
 	virtual TreeNode * doubleRotateRight(TreeNode* node);
   
 	virtual TreeNode * insert(GenericData * elem, TreeNode * tree);
-	virtual TreeNode * remove(GenericData * elem, TreeNode * tree);
+	/* virtual TreeNode * remove(GenericData * elem, TreeNode * tree); */
 	virtual GenericData * get(TreeNode * tree, int id) const;
 	virtual void printTree(TreeNode* tree, std::ostream &out) const;
 };

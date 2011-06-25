@@ -4,16 +4,24 @@
  */
 
 #include <stdlib.h>
-#include "b_tree.h"
+#include <string>
+#include <iostream>
+#include <fstream>
 
-Tree::Tree() {
-	size = 0;
-	root = NULL;
-}
+#include "tree.h"
 
-Tree::~Tree() { 
-	//TODO delete tree
-}
+
+
+
+
+/**/
+
+ Tree::Tree() {
+ size = 0;
+ root = NULL;
+ }
+
+Tree::~Tree(){  }
 
 void Tree::add(GenericData * elem) {
 	root = insert(elem, root);
@@ -95,9 +103,11 @@ TreeNode * Tree::doubleRotateRight(TreeNode* node){
 	return singleRotateRight(node);
 }
 
-bool Tree::remove(GenericData * elem) {
+
+//bool Tree::remove(GenericData * elem) {
 	// TODO: remove elem
-}
+//}
+
 
 
 bool Tree::contains(int id) const {

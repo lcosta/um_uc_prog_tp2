@@ -1,4 +1,11 @@
+
 #include <iostream>
+#include <fstream>
+#include <string>
+
+#include "tree.h"
+
+
 using namespace std;
 
 

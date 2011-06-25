@@ -1,32 +1,51 @@
 /*
  *  GenericData.h
  *
- *  encapsula dados de maneira a reutilizar o TreeNode
- *   para qualquer tipo de dados
+ *  estrutura base para dados genérios,
+ *      possibilita polimorfismo nas class. 
  *
  */
 
 #ifndef _GENERIC_DATA_H_
 #define _GENERIC_DATA_H_
 
-#include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+
+#include <string>
+
+
 
 using namespace std;
 
 class GenericData {
-public:
   
-  /*
-  virtual int getId() const;
-  virtual void setId(int value);
-
-  virtual string getName() const;
-  virtual void setName(string value);
-   
-   */
+protected:
+  int _id;
+  string _name;
+  
+  
+public:
+  GenericData(int id, string name){
+    
+  };
+  ~GenericData(){};
+  
+  
+  /* atributos genericos */
+  
+  int getId() const{ return _id; };
+  void setId(int value){ _id = value; };
+  
+  string getName() const{ return _name; };
+  void setName(string value){ _name = value; };
+  
+  /* --- */
+  
+  
 };
+
+
 
 
 #endif

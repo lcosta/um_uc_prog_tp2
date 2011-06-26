@@ -6,8 +6,16 @@
 #include "tree.h"
 #include "tree_client.h"
 #include "client.h"
+
+
 #include "shop.h"
 #include "pharmacy.h"
+
+#include "drug.h"
+#include "varied.h"
+#include "tablet.h"
+#include "sachet.h"
+#include "syrup.h"
 
 
 bool _run_none_test = false;
@@ -82,7 +90,6 @@ void test_basics_structures (bool run, string _test_name="")
     
     app_print("\n------------------------------------------maker - tree_client");
     
-    
     TreeClient * b_tree_client_db = new TreeClient();
     
     b_tree_client_db->add(new Client(1, "client 1", 10));
@@ -107,9 +114,72 @@ void test_basics_structures (bool run, string _test_name="")
        
        app_print(age);
      }
+    b_tree_client_db->print(std::cout);
+
     
-    //b_tree_client_db->add(right_generic_data);
     
+    app_print("maker - tree_drug_db...");
+    
+    Tree * tree_drug_db = new Tree(); // criar arvore binaria
+
+    // adicionar elementos a Tree
+    tree_drug_db->add(new Drug(1, "drug1", "laboratory1", 1.1, 0.15,  10, 1000) );
+    tree_drug_db->add(new Drug(2, "drug2", "laboratory2", 2.2, 0.16,  20, 2000) );
+    
+    tree_drug_db->add(new Varied(3, "varied_drug3", "laboratory3", 3.3, 0.17, 30, 3000) );
+    tree_drug_db->add(new Tablet(4, "tablet_drug4", "laboratory4", 4.4, 0.18, 40, 4000) );
+    tree_drug_db->add(new Sachet(5, "sachet_drug5", "laboratory5", 4.4, 0.18, 50, 5000, 12) );
+    tree_drug_db->add(new Syrup(6, "syrup_drug5", "laboratory6", 4.4, 0.18, 50, 6000, 24, 1) ); // ultimo parametro o tipo de envolucro ex. 1 = Vidro
+    
+    tree_drug_db->print(std::cout);
+    
+    
+    
+    app_print("get id, name, laboratory and stock from drug...");
+    
+    Drug * get_drug = (Drug*)tree_drug_db->get(6); // cast GenericData to Drug
+    
+    // propriedades do GenericData
+    app_print(get_drug->getId());
+    app_print(get_drug->getName());
+    
+    // propriedades do Drug
+    app_print(get_drug->getLaboratory());
+    app_print(get_drug->getStock());
+    app_print(get_drug->getMeasure_unit());
+
+    // propriedades do Sachet
+     if (typeid(*get_drug) == typeid(Sachet)) { // verifica o typeid para pegar propriedade especifica.
+     Sachet * current_drug = ((Sachet*)get_drug); //cast
+     app_print("propriedades do Sachet - getDose");
+     app_print(current_drug->getDose());
+     }
+    
+    // propriedades do Syrup
+    if (typeid(*get_drug) == typeid(Syrup)) { // verifica o typeid para pegar propriedade especifica.
+      Syrup * current_drug = ((Syrup*)get_drug); //cast
+      app_print("propriedades do Syrup - getDose and getTypeOfCasing");
+      app_print(current_drug->getDose());
+      app_print(current_drug->getTypeOfCasing(), false); app_print(" <-- tipyOfCasing");
+    }
+    
+    /*
+    if (typeid(*get_drug) == typeid(Drug)) { // verifica o typeid para pegar propriedade especifica.
+      Drug * current_drug = ((Drug*)get_drug); //cast
+
+      app_print(current_drug->getId());
+      app_print(current_drug->getName());
+      
+      app_print(current_drug->getLaboratory());
+      
+    }
+      */  
+    
+    //app_print(typeid(*get_drug).name);
+    
+    
+    
+
     b_tree_client_db->print(std::cout);
 
     //-----------------------------------------shop tree---------------------
@@ -175,6 +245,15 @@ void test_basics_structures (bool run, string _test_name="")
 		app_print("");
     
    }
+
+    
+    app_print("");
+    app_print("");
+    app_print("");
+    app_print("");
+    app_print("");
+    
+
   }
 }
 
@@ -190,7 +269,7 @@ int main (int argc, char * const argv[]) {
   
 
   
-  system("pause");
+  //system("pause");
   return 0;
 }
 

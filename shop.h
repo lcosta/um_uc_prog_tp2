@@ -1,4 +1,4 @@
-
+#ifndef _shop_h_
 #define _shop_h_
 
 #include <string>
@@ -9,27 +9,28 @@
 
 using namespace std;
 
-class Shop {
-protected:
+class Shop : public GenericData {
 
+protected:  
   int _id_pharmacy;
   int _id_drug;
-  string _name;
   int _quantity;
   bool _comp;
   int _total_value;
-
-  // START: gets and sets
-  int getIdPharmacy() const{
-    return _id_pharmacy;
-  };
   
+public:
+
+  Shop(int id ,int idPharmacy, int idDrug, string name, int quantity, bool comp, int totalValue);
+  ~Shop();
+  
+   // START: gets and sets
+	
+  int getIdPharmacy() const{
+  return _id_pharmacy;
+  }
+
   int getIdDrug() const{
     return _id_drug;
-  };
-
-  string getName() const{
-    return _name;
   };
 
   int getQuantity() const{
@@ -44,17 +45,12 @@ protected:
     return _comp;
   };
 
-
   void setIdPharmacy(int id){
-    _id_pharmacy = id;
+	  _id_pharmacy = id;
   };
   
   void setIdDrug(int id){
    _id_drug = id;
-  };
-
-  void setName(string name){
-  _name = name;
   };
 
   void setQuantity(int quantity){
@@ -69,12 +65,6 @@ protected:
   _total_value = totalValue;
   };
   
-  
-public:
-  Shop(int idPharmacy, int idDrug, string name, int quantity, bool comp, int totalValue);	
-  ~Shop();
-  
-
 
   // END: gets and sets  
   
@@ -87,4 +77,14 @@ public:
 
 };
 
-//#endif
+
+//----------cpp
+Shop::Shop(int id,int idPharmacy, int idDrug, string name, int quantity, bool comp, int totalValue) : GenericData(id, name)
+{
+	 Shop::_id_pharmacy	= idPharmacy;
+	 Shop::_id_drug = idDrug;
+	 Shop::_quantity = quantity;
+	 Shop::_comp = comp;
+	 Shop::_total_value = totalValue;
+}
+#endif

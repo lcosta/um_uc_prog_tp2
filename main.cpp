@@ -6,6 +6,11 @@
 #include "tree.h"
 #include "tree_client.h"
 #include "client.h"
+#include "drug.h"
+#include "varied.h"
+#include "tablet.h"
+#include "sachet.h"
+#include "syrup.h"
 
 
 #include "shop.h"
@@ -88,7 +93,9 @@ void test_basics_structures (bool run, string _test_name="")
 	b_tree->add(client1);    
     b_tree->print(std::cout);    
     
+
     app_print("\n------------------------------------------maker - tree_client");
+
     
     TreeClient * b_tree_client_db = new TreeClient();
     
@@ -130,6 +137,7 @@ void test_basics_structures (bool run, string _test_name="")
     tree_drug_db->add(new Tablet(4, "tablet_drug4", "laboratory4", 4.4, 0.18, 40, 4000) );
     tree_drug_db->add(new Sachet(5, "sachet_drug5", "laboratory5", 4.4, 0.18, 50, 5000, 12) );
     tree_drug_db->add(new Syrup(6, "syrup_drug5", "laboratory6", 4.4, 0.18, 50, 6000, 24, 1) ); // ultimo parametro o tipo de envolucro ex. 1 = Vidro
+
     
     tree_drug_db->print(std::cout);
     
@@ -246,8 +254,17 @@ void test_basics_structures (bool run, string _test_name="")
     
    }
 
+
     
-    app_print("");
+    
+    
+    
+    
+    
+    
+    
+
+    
     app_print("");
     app_print("");
     app_print("");

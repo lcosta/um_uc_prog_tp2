@@ -51,10 +51,8 @@ public:
 
   virtual int getStock() const{ return _stock; };
   virtual void setStock(int value){ _stock = value; };
-
-
   
-  
+  virtual float getPrice(bool w_pooling);
   /* --- */
   
   
@@ -77,5 +75,17 @@ Drug::Drug(int id, string name,
 };
 
 
+float Drug::getPrice(bool w_pooling) {
+  
+  float p;
+  if (w_pooling) {
+    p = getPrice() * (1-getPooling());
+  }
+  else {
+    p = getPrice();
+  }
+  
+  return p;
+}
 
 #endif

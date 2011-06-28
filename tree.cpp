@@ -153,3 +153,19 @@ void Tree::printTree(TreeNode* tree, std::ostream &out) const {
 	
 }
 
+
+void Tree::list(std::ostream &out) const {
+  if (root != NULL) {
+    listTree(root, out);
+    out << std::endl;
+  }
+}
+
+void Tree::listTree(TreeNode* tree, std::ostream &out) const {
+  if(tree != NULL) {
+    listTree(tree->getLeft(), out);
+    //GenericData * el = 
+    tree->getElem()->list(out);
+    listTree(tree->getRight(), out);
+  }
+}

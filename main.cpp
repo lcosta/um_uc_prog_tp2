@@ -22,9 +22,10 @@
 
 bool _run_none_test = false;
 
+TreeClient * tree_client_db = new TreeClient();
+Tree * tree_pharmacy_db = new Tree();
 
 /* funcoes utilitarias */
-
 void app_print(string str, bool endl=true){
   std::cout << str;
   if (endl == true) cout << "\n";
@@ -34,14 +35,10 @@ void app_print(int number, bool endl=true){
   std::cout << number;
   if (endl == true) cout << "\n";
 };
-
 /* --- */
 
-
-
-
-void test_basics_structures (bool run, string _test_name="") 
-{
+/* funcoes auxiliares */
+void test_basics_structures (bool run, std::string _test_name="") {
   if (run && !_run_none_test)
   {
     app_print(_test_name);
@@ -106,7 +103,7 @@ void test_basics_structures (bool run, string _test_name="")
     if (typeid(*get_client1) == typeid(Client)) {
       app_print("get id, name and age from client...");
       
-      Client * current_client = ((Client*)get_client1);// cast para aceder aos atributos q nao s�generic data
+      Client * current_client = ((Client*)get_client1);// cast
       
       int id_client = current_client->getId();
       app_print(id_client);
@@ -236,7 +233,7 @@ void test_basics_structures (bool run, string _test_name="")
     {
       app_print("get id, name");
       
-      Pharmacy * current_pharm = ((Pharmacy*)get_pharm);  // cast para aceder aos atributos q nao s�generic data
+      Pharmacy * current_pharm = ((Pharmacy*)get_pharm);  // cast
       
       int id_pharm		= current_pharm->getId();
       string name_pharm	= current_pharm->getName();
@@ -245,28 +242,69 @@ void test_basics_structures (bool run, string _test_name="")
       app_print(name_pharm);
       pharm_tree->print(std::cout);//print tree [[]]
       //------------------------------------------------------------------------
-      app_print("");
-      app_print("");
-      app_print("");
       
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    app_print("");
-    app_print("");
     app_print("");
     app_print("");
     
+    
+  }
+}
+
+
+void test_app_structures (bool run, std::string _test_name="") {
+  if (run && !_run_none_test)
+  {
+    app_print(_test_name);
+    app_print("");
+    
+    
+    // pharmacy
+    tree_pharmacy_db->add(new Pharmacy(1, "Farmacia Brito"));
+    tree_pharmacy_db->add(new Pharmacy(2, "Farmacia Cristal"));
+    tree_pharmacy_db->add(new Pharmacy(3, "Farmacia Charopinho"));
+    
+    app_print("show tree pharmacy");
+    tree_pharmacy_db->print(std::cout);
+    
+    app_print("");
+    app_print("get and show pharmacy with id=1");
+    Pharmacy * current_pharm = ((Pharmacy*)tree_pharmacy_db->get(1));
+    
+    current_pharm->list(std::cout);
+    
+    app_print("");
+    app_print("add Drugs in pharmacy tree and list tree of drugs");
+    current_pharm->addDrug(new Varied(3, "varied_drug3", "laboratory3", 3.3, 0.17, 30, 3000) );
+    current_pharm->addDrug(new Tablet(4, "tablet_drug4", "laboratory4", 4.4, 0.18, 40, 4000) );
+    current_pharm->addDrug(new Sachet(5, "sachet_drug5", "laboratory5", 4.4, 0.18, 50, 5000, 12) );
+    current_pharm->addDrug(new Syrup(6, "syrup_drug5", "laboratory6", 4.4, 0.18, 50, 6000, 24, 1) );
+    
+    current_pharm->listDrugs(std::cout);
+    
+    app_print("");
+    
+    // client
+    
+    tree_client_db->add(new Client(1, "X client 1", 10));
+    tree_client_db->add(new Client(2, "C client 2", 20));
+    tree_client_db->add(new Client(3, "A client 3", 30));
+    
+    app_print("show tree client order by name");
+    tree_client_db->list(std::cout);
+    
+    app_print("get and show client with id=2");
+    Client * current_client = ((Client*)tree_client_db->get(2));
+    current_client->list(std::cout);
+    
+    app_print("");
+    
+    app_print("add shop in client with id=2 and list shops");
+    current_client->addShop(new Shop(1, 1, 3, "varied_drug3", 0.15, true, 33));//(id,idPhar,idDrug,name,quantity, compart, totalValue)
+    current_client->addShop(new Shop(2, 1, 4, "tablet_drug4", 0.15, true, 33));
+    current_client->listShops(std::cout);
     
   }
 }
@@ -279,10 +317,19 @@ int main (int argc, char * const argv[]) {
   app_print("start app...", true);
   app_print("");
   
-  test_basics_structures(true, "* Teste - Estruturas Basicas...\n");
-  
+  // para activar os teste, colocar o primeiro pararametro a true
+  test_basics_structures(false, "* Teste - Estruturas Basicas...\n");
+  test_app_structures(true, "* Teste - Estrutura da Aplicacao...\n");
   
   
   //system("pause");
   return 0;
 }
+
+
+
+
+
+
+
+

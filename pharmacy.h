@@ -11,7 +11,8 @@ using namespace std;
 
 class Pharmacy : public GenericData {
   
-protected:
+private:
+  Tree * drug_db;
 
 public:
   Pharmacy(int id, string name);
@@ -19,16 +20,25 @@ public:
   ~Pharmacy();
   
   
-  /* atributos genericos */
-  
+  /* metodos */
+  void addDrug(Drug * drug);
+  void listDrugs(std::ostream &out);
   /* --- */
 };
 
 //-----cpp
 Pharmacy::Pharmacy(int id, string name) : GenericData(id, name){
-  
+  drug_db = new Tree(); // criar arvore binaria
 };
 
+void Pharmacy::addDrug(Drug * drug){
+  drug_db->add(drug);
+};
 
+void Pharmacy::listDrugs(std::ostream &out){
+  drug_db->list(out);
+}
 
 #endif
+
+

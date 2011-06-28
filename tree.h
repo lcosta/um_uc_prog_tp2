@@ -17,10 +17,10 @@
 using namespace std;
 
 class Tree  {
-  
-private:
-	int size;
-	TreeNode * root;
+
+protected:
+  TreeNode * root;
+  int size;
   
 public:
 	Tree();
@@ -35,6 +35,8 @@ public:
 	virtual int getSize() const;
 	
 	virtual void print(std::ostream &out) const;
+  
+  virtual void list(std::ostream &out) const;
 	
 protected:
 	virtual int height(TreeNode * node) const;
@@ -47,5 +49,7 @@ protected:
 	/* virtual TreeNode * remove(GenericData * elem, TreeNode * tree); */
 	virtual GenericData * get(TreeNode * tree, int id) const;
 	virtual void printTree(TreeNode* tree, std::ostream &out) const;
+  
+  virtual void listTree(TreeNode* tree, std::ostream &out) const;
 };
 #endif

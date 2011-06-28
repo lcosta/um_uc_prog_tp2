@@ -44,8 +44,14 @@ public:
   
   /* --- */
   
+  void list(std::ostream &out){
+    out << "id: " << _id << " | " << "name: " << _name << std::endl;
+  };
   
 };
+
+
+
 
 
 

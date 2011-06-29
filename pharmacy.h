@@ -23,6 +23,7 @@ public:
   /* metodos */
   void addDrug(Drug * drug);
   void listDrugs(std::ostream &out);
+  Drug * getDrug(int id);
   /* --- */
 };
 
@@ -33,6 +34,10 @@ Pharmacy::Pharmacy(int id, string name) : GenericData(id, name){
 
 void Pharmacy::addDrug(Drug * drug){
   drug_db->add(drug);
+};
+
+Drug * Pharmacy::getDrug(int id){
+  return ((Drug *)drug_db->get(id));
 };
 
 void Pharmacy::listDrugs(std::ostream &out){

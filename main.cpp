@@ -24,6 +24,10 @@ bool _run_none_test = false;
 
 TreeClient * tree_client_db = new TreeClient();
 Tree * tree_pharmacy_db = new Tree();
+Pharmacy * current_pharm;
+Client * current_client;
+Drug * current_drug;
+
 
 /* funcoes utilitarias */
 void app_print(string str, bool endl=true){
@@ -310,6 +314,54 @@ void test_app_structures (bool run, std::string _test_name="") {
 }
 
 
+void printMenuMain();
+void printMenuOptions();
+void printMenuDrugs();
+
+string getString(string msg){
+  string s;
+  
+  cout << msg;
+  getline (cin,s);
+  
+  if (s.length() == 0) {
+    cout << "\nintroduza um nome valido.\n";
+    return getString(msg);
+  }
+  
+  return s;
+}
+
+int getInt(string msg){
+  int i;
+  
+  cout << msg;
+  cin >> i;
+  
+  if (i <= 0) {
+    cout << "\nintroduza um valor maior que 0.\n";
+    return getInt(msg);
+  }
+  
+  return i;
+}
+
+float getFloat(string msg){
+  float i;
+  
+  cout << msg;
+  cin >> i;
+  
+  if (i <= 0) {
+    cout << "\nintroduza um valor maior que 0.\n";
+    return getInt(msg);
+  }
+  
+  return i;
+}
+
+
+
 int main (int argc, char * const argv[]) {
   
   _run_none_test = false;
@@ -318,17 +370,309 @@ int main (int argc, char * const argv[]) {
   app_print("");
   
   // para activar os teste, colocar o primeiro pararametro a true
-  test_basics_structures(false, "* Teste - Estruturas Basicas...\n");
-  test_app_structures(true, "* Teste - Estrutura da Aplicacao...\n");
+  //test_basics_structures(false, "* Teste - Estruturas Basicas...\n");
+  //test_app_structures(true, "* Teste - Estrutura da Aplicacao...\n");
   
   
   //system("pause");
+  
+  // menus
+  
+  bool run = true;
+	int opt;
+	int id, age_in;
+	string nome;
+	int opt_phar, stock_in, quantaty_in, dose_in, type_of_casing_in;
+	string name_in;
+  string laboratory_in;
+  float price_in, pooling_in;
+  
+  
+	int go_to = -1;
+  
+  while(run) 
+	{
+    if(go_to != -1)
+		{
+			opt_phar = go_to;
+			go_to = -1;
+		}
+		else 
+		{
+			printMenuMain();
+			cin >> opt_phar;
+		}
+    
+		switch (opt_phar) 
+		{
+        
+      case 1: // Criar Farmacia
+        //opt_phar = getInt("Indique o cÛdigo da farm·cia? ");
+        
+        
+        id = getInt("introduza o ID da farmacia: ");
+        cin.ignore();
+        name_in = getString("introduza o nome da farmacia: ");
+        
+        tree_pharmacy_db->add(new Pharmacy(id, name_in));
+        app_print("show tree pharmacy");
+        tree_pharmacy_db->list(std::cout);
+        
+        break;
+        
+      case 2: // Abrir Farmacia
+        cout << "Escolha o ID da Farmacia a abrir:\n";
+        //cin >> opt_phar;
+        opt_phar = getInt("");
+        current_pharm = ((Pharmacy*)tree_pharmacy_db->get(opt_phar));
+        current_pharm->list(std::cout);
+        // cin.ignore();
+        go_to = 3;
+        break;
+        
+      case 5: // Listar Farmacia
+        tree_pharmacy_db->list(std::cout);
+        go_to = 3;
+        break;
+        
+      case 3: // Menu opcoes
+        
+        printMenuOptions();
+        cin >> opt;
+        cin.ignore();
+        go_to = 3;
+        
+        switch (opt) 
+			{
+				case 0:// Editar Farmacia
+          
+          tree_pharmacy_db->list(std::cout);
+          
+          id = getInt("Digite o id da farmacia a editar: ");
+          
+          current_pharm = ((Pharmacy*)tree_pharmacy_db->get(id));
+          cin.ignore();
+          name_in = getString("introduza o novo nome da farmacia: ");
+          
+          current_pharm->setName(name_in);
+          
+          current_pharm->list(std::cout);
+          
+					break;
+          
+				case 1:// Inserir medicamento
+					printMenuDrugs();
+
+					cin >> opt;
+
+          
+          cin.ignore();
+          id = getInt("Informe uma ID: ");
+          cin.ignore();
+          name_in = getString("Introduza um nome: ");
+          laboratory_in = getString("Introduza um laboratorio ");
+          price_in = getFloat("Introduza o preco: ");
+          cin.ignore();
+          pooling_in = getFloat("Introduza o valor da comparticipacao: ");
+          cin.ignore();
+          stock_in = getInt("Introduza o stock: ");
+          cin.ignore();
+          quantaty_in = getInt("Introduza a quantidade por embalagem: ");
+          cin.ignore();
+          
+          
+          switch (opt) 
+          {
+            case 1:// Comprimido
+              current_pharm->addDrug(new Tablet(id, name_in, laboratory_in, price_in, pooling_in, 
+                                               quantaty_in, stock_in) );
+             break;  
+              
+            case 2:// Xarope
+              dose_in = getInt("Introduza a dozagem: ");
+              cin.ignore();
+              type_of_casing_in = getInt("Introduza o id do tipo de embalagem");
+              current_pharm->addDrug(new Syrup(id, name_in, laboratory_in, price_in, pooling_in, 
+                                               quantaty_in, stock_in, dose_in, type_of_casing_in) );
+              break;  
+              
+            case 3:// Saquetas
+              dose_in = getInt("Introduza a dozagem: ");
+              current_pharm->addDrug(new Sachet(id, name_in, laboratory_in, price_in, pooling_in, 
+                                               quantaty_in, stock_in, dose_in) );
+              break;  
+              
+            case 4:// Outros
+              current_pharm->addDrug(new Varied(id, name_in, laboratory_in, price_in, pooling_in, 
+                                               quantaty_in, stock_in) );
+              break;  
+          }
+            
+          
+          current_pharm->listDrugs(std::cout);
+          
+          
+					if (go_to == -1) 
+						run = false;
+					break;
+          
+				case 2:// Inserir cliente
+					cout << endl;
+					id = getInt("ID do cliente? ");
+          cin.ignore();
+          name_in = getString("Nome do cliente? ");
+          age_in = getInt("Idade do cliente? ");
+          cin.ignore();
+          
+          tree_client_db->add(new Client(id, name_in, age_in));
+          
+          tree_client_db->list(cout);
+          
+					cout << endl;
+					break;
+          
+				case 3:// Listar medicamneto
+					cout << endl;
+          current_pharm->listDrugs(cout);
+          cout << endl;
+					break;
+          
+				case 4:// Listar cliente
+					cout << endl;
+          tree_client_db->list(cout);
+					cout << endl;
+					break;
+          
+				case 5:// Listar medicamentos vendido(s)
+          id = getInt("Informe um ID do cliente para consultar suas compras: ");
+          cin.ignore();
+          cout << endl;
+          
+          current_client = ((Client*)tree_client_db->get(id));
+          current_client->listShops(cout);
+          cout << endl;
+          
+					break;
+          
+				case 6:// Editar medicamento
+					cout << endl;
+					cout << endl;
+					break;
+          
+				case 7:// Editar cliente
+					cout << endl;
+					id = getInt("ID do cliente a editar? ");
+          cin.ignore();
+          
+          current_client = ((Client *)tree_client_db->get(id));
+          current_client->list(cout);
+          
+          name_in = getString("Novo nome do cliente? ");
+          age_in = getInt("Nova idade do cliente? ");
+          cin.ignore();
+      
+          current_client->setName(name_in);
+          current_client->setAge(age_in);
+          
+          current_client->list(cout);
+          
+					cout << endl;
+					break;
+          
+				case 8:// Vender medicamento
+					
+          current_pharm = ((Pharmacy *)tree_pharmacy_db->get(getInt("Informe o Id da Farmacia: ")));
+          
+          current_client = ((Client *)tree_client_db->get(getInt("Informe o Id do Cliente: ")));
+          
+          current_drug = current_pharm->getDrug(getInt("Id do medicamento"));
+          
+          opt = getInt("Quantos: ");
+          
+          current_client->addShop(new Shop(getInt("id compra") ,current_pharm->getId(), current_drug->getId() , current_drug->getName(), 
+                                           opt, getInt("1 - comparticipado\n0 - nao comparticipado"), current_drug->getPrice() * opt ));
+
+          
+          
+          
+          break;
+          
+				
+          
+				case 10:// Menu principal 
+					go_to = -1;
+					break;
+          
+				case 11: // Sair
+					run = false;
+					break;
+          
+				default:
+					cout << endl;
+					cout << "Tente novamente..." << endl;
+					break;
+			}
+        break;
+        
+      case 4:// Sair 
+        run = false;
+        break;
+      default:cout << "Tente novamente..." << endl;
+        break;
+		}
+	}
+  
   return 0;
 }
 
 
 
 
+void printMenuMain() {
+  cout << endl << endl;
+  cout << " **** Menu Principal ****" << endl;
+  cout << "|----------------------|" << endl;
+  cout << "|  1 - Criar Farmacia  |" << endl;
+  cout << "|  2 - Abrir Farmacia  |" << endl;
+  cout << "|  5 - Lista Farmacia  |" << endl;
+  cout << "|  3 - Menu Opcoes     |" << endl;
+  cout << "|  4 - Sair            |" << endl;
+  cout << " ---------------------- " << endl;
+  cout << "digite a opcao? " << endl;
+}
+
+void printMenuOptions() {
+  cout << endl << endl;
+  cout << " ***********  Menu Opcoes  ********** " << endl;
+  cout << "|************************************|" << endl;
+  cout << "| 0  - Editar farmacia               |" << endl;
+  cout << "| 1  - Inserir medicamento           |" << endl;
+  cout << "| 2  - Inserir cliente               |" << endl;
+  cout << "| 3  - Listar medicamento(s)         |" << endl;
+  cout << "| 4  - Listar cliente(s)             |" << endl;
+  cout << "| 5  - Listar medicamentos vendido(s)|" << endl;
+  cout << "| 6  - Editar medicamento            |" << endl;
+  cout << "| 7  - Editar cliente                |" << endl;
+  cout << "| 8  - Vender Medicamento            |" << endl;
+  cout << "| 10 - Menu Principal                |" << endl;
+  cout << "| 11 - Sair                          |" << endl;
+  cout << " ************************************ " << endl;
+  cout << "digite a opcao? " << endl;
+}
+
+void printMenuDrugs() {
+  cout << endl << endl;
+  cout << "**Menu Tipo de Medicamento***" << endl;
+  cout << "|---------------------------|" << endl;
+  cout << "|   1 - Comprimido          |" << endl;
+  cout << "|   2 - Xarope              |" << endl;
+  cout << "|   3 - Saquetas            |" << endl;
+  cout << "|   4 - Outros              |" << endl;
+  cout << "|   5 - Voltar              |" << endl;
+  cout << "|   6 - Sair                |" << endl;
+  cout << " --------------------------- " << endl;
+  cout << "digite a opcao? " << endl;
+}
 
 
 
